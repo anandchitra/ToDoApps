@@ -1,0 +1,40 @@
+<!-- <button mat-icon-button style="float:right; margin: 5px;" 
+       
+        matDialogClose>
+   <mat-icon>close</mat-icon>
+</button> -->
+<h2 mat-dialog-title class="align-center">Add New Task</h2>
+<mat-dialog-content class="align-center">
+  <mat-form-field>
+    <textarea matInput 
+              [(ngModel)]="newTask.description" 
+              rows="2"
+              cols="15" required>
+   </textarea>
+    <!-- <input matInput type="" #description="ngModel" 
+           [(ngModel)]="newTask.description" 
+           placeholder="Description"
+           > -->
+  </mat-form-field>
+
+  <mat-form-field>
+    <input matInput type="date" #description="ngModel" 
+           #targetDate="ngModel"
+           [ngModel]="formatDate(newTask.targetDate) | date:'yyyy-MM-dd' "
+           (ngModelChange)="newTask.targetDate = $event"
+           placeholder="Description">
+  </mat-form-field>
+</mat-dialog-content>
+<mat-dialog-actions align="center">
+  <button mat-raised-button
+        [style.background-color]="'#1976d2'"
+        style="color: white;"
+        (click)="createTask()" matDialogClose>
+    Save
+</button>
+  <button mat-raised-button color="warn" matDialogClose>
+    Cancel
+  </button>
+</mat-dialog-actions>
+
+

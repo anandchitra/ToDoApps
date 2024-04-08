@@ -1,0 +1,25 @@
+td .p-calendar {
+    overflow: visible !important;
+}
+
+.table-container {
+    display: flex;
+    justify-content: center; /* Horizontal alignment */
+    align-items: center; /* Vertical alignment */
+    height: 100vh; /* Adjust as needed */
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Set the height of the container to 100% of the viewport height */
+}
+
+/* Adjust the width of the container if needed */
+.container p-tabView {
+    width: 80%; /* Adjust the width as needed */
+}
+.remove-underline .p-tabview-title {
+    text-decoration: none !important;
+}

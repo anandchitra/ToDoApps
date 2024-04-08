@@ -1,0 +1,148 @@
+<!-- <div class="container mt-4" >
+    <div class="card">
+        <h1>Employee Registation</h1>
+<form>
+    <div class="form-group">
+      <label>Name</label>
+      <input type="text" [(ngModel)]="employeename" [ngModelOptions]="{standalone: true}"  class="form-control" id="name" class="form-control" placeholder="Enter Name">
+    </div>
+
+    <div class="form-group">
+        <label>Email</label>
+        <input type="email" [(ngModel)]="email" [ngModelOptions]="{standalone: true}" class="form-control" id="email"  placeholder="Enter Email">
+      </div>
+
+      <div class="form-group">
+        <label>Paaword</label>
+        <input type="password" [(ngModel)]="password" [ngModelOptions]="{standalone: true}" class="form-control" id="password" class="form-control" placeholder="Enter Password">
+      </div>
+
+     <button type="submit" class="btn btn-primary" (click)="save()">Register</button>
+
+
+  </form>
+</div>
+
+</div> -->
+<!-- <div class="alert alert-warning" *ngIf="registerForm.dirty && name.invalid">Enter valid Name</div>
+  <div class="alert alert-warning" *ngIf="registerForm.dirty && registerForm.invalid">Enter valid Email</div>
+  <div class="alert alert-warning" *ngIf="registerForm.dirty && registerForm.invalid">Enter atleast 5 characters in Description</div>
+
+  <form (ngSubmit)="!registerForm.invalid && save()" #registerForm="ngForm"> -->
+<!-- <div class="p-grid-nogutter" >
+    <div class="p-xl-3 p-lg-3 p-md-6 p-sm-12 " >
+      <div class="card border-teal-700 border-round-sm p-5" >
+        <h3>Register</h3>
+         <div class="p-fluid" > 
+
+
+        <span class="p-float-label mt-2 " >
+            
+            <input matInput type="text" [(ngModel)]="employeename"
+             [ngModelOptions]="{standalone: true}" 
+              id="name" class="form-control"
+               placeholder="Enter Name" #name="ngModel" required="required"
+               name="name"
+               
+                >
+             
+        </span>
+    
+        <span class="p-float-label mt-2 ">
+            
+                <input matInput placeholder="email"
+                type="email" [(ngModel)]="email" [ngModelOptions]="{standalone: true}"
+                 class="form-control" id="email" >
+              
+            
+        </span>
+
+        <span class="p-float-label mt-2 ">
+            <input matInput placeholder="password"
+            type="password" [(ngModel)]="password" [ngModelOptions]="{standalone: true}" 
+            class="form-control" id="password" >
+        </span>
+
+        <span>
+        <div class="p-2 align-content-center ">
+            <button mat-raised-button color="primary" style="margin-right:5px;" (click)="save()">Register</button>
+        </div>
+        
+    </span>
+        
+    </div>
+
+</div>
+</div> 
+
+</div>
+</form> -->
+
+
+<div class="container" id="container">
+  	<div class="form-container sign-up-container">
+		<form action="#">
+			<h1>Create Account</h1>
+			<div class="social-container">
+				<a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
+				<a href="#" class="social"><i class="fab fa-google-plus-g"></i></a>
+				<a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
+			</div>
+			<span>or use your email for registration</span>
+			<input type="text" 
+            [(ngModel)]="employeename"
+            [ngModelOptions]="{standalone: true}" 
+            id="name" 
+            class="form-control"
+            placeholder="Enter Name" 
+            #name="ngModel" required="required"
+            name="name"/>
+			<input type="email" placeholder="Email"
+             [(ngModel)]="email" 
+             [ngModelOptions]="{standalone: true}"    
+             class="form-control" id="email" />
+			<input type="password" placeholder="Password" 
+              [(ngModel)]="password" 
+              [ngModelOptions]="{standalone: true}" 
+              class="form-control" 
+              id="password"/>
+                  
+			<button (click)="save()">Sign Up</button>
+		</form>
+  </div>
+
+  <div class="overlay-container">
+    <div class="overlay"> 
+      <div class="overlay-panel overlay-left">
+				<h1>Welcome Back!</h1>
+				<p>To keep connected with us please login with your personal info</p>
+				<button id="signIn" (click)="Login()">Sign In</button>
+			</div>
+    </div> 
+  </div>
+
+	</div>
+  
+
+   <!-- <div class="form-container sign-in-container"> 
+		<form action="#">
+			<h1>Sign in</h1>
+			<div class="social-container">
+				<a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
+				<a href="#" class="social"><i class="fab fa-google-plus-g"></i></a>
+				<a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
+			</div>
+			<span>or use your account</span>
+			<input type="email" placeholder="Email" 
+                   [(ngModel)]="email" [ngModelOptions]="{standalone: true}"
+                   class="form-control" id="email" />
+			<input type="password" placeholder="Password" 
+                   [(ngModel)]="password" [ngModelOptions]="{standalone: true}" 
+                   class="form-control" id="password" class="form-control"/>
+			
+			<button (click)="Login()">Sign In</button>
+		</form>
+	</div> 
+	 -->
+
+

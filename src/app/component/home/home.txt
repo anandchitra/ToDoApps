@@ -1,0 +1,56 @@
+index.html
+    contains app-root element
+main.ts
+    typescript file to run application
+app.comp.ts
+    component file - app-root selector
+routes.ts
+    to set component URL
+Angular Json
+    project configuaration file     
+package.Json
+    packages and dependencies
+app.module.ts
+    stand alone component
+
+    Data Binding
+        one way Binding
+            {{expression}} string interpolation
+                can use variable and function
+            
+        two way Binding              
+            [(ngModel)]- import- FormsModule
+        property Binding[]
+            HTML tag property binding h1[inner text]
+            eventbinding
+            (click)
+            (disable) etc....
+
+
+    changes behaviour,appearance or layout of the elements
+        Component Directives
+            component is also a directive
+        Structural Directives - import{Common Module}
+            ngFor 
+                *ngFor="let array of arraies"
+            ngIf 
+                *ngIf="false"
+
+        Attribute Directives
+            changes appearance and behaviour
+                ngClass- css Class .primary{}
+                [ngClass]= "['primary']"
+                            "{'primary':'condition'}" condition Class
+                [ngStyle]="{'color':'red'}"
+
+
+
+
+
+
+
+
+
+
+
+

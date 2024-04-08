@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["src/app/component/task/task.component.css"],
+  "sourcesContent": ["body {\r\n    background: url(\"https://t4.ftcdn.net/jpg/02/89/04/39/360_F_289043915_62E4CSfMrMJeW3JFYnaYUcXZLmgV6iK3.jpg\") top right no-repeat;\r\n    background-attachment: fixed;\r\n    background-size: 100%;\r\n    }"],
+  "mappings": ";AAAA;AACI,cAAY,+FAAiG,IAAI,MAAM;AACvH,yBAAuB;AACvB,mBAAiB;AACjB;",
+  "names": []
+}

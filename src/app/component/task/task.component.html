@@ -1,0 +1,448 @@
+<div>
+    <p-toolbar styleClass="bg-white-900 shadow-2" [style]="{ 'border-radius': 'h-1', 
+    'background-image': 'linear-gradient(to right, var(--blue-600), var(--blue-700))' }">
+        <ng-template pTemplate="center">
+            <div class="flex flex-wrap align-items-center gap-3 flex-row">
+                <button class="p-link inline-flex justify-content-center
+                 align-items-center text-white h-3rem w-3rem border-circle
+                  hover:bg-black-alpha-10 transition-all transition-duration-200">
+                    <i class="pi pi-home text-xl"></i></button>
+
+            </div>
+            
+        </ng-template>
+
+        <ng-template pTemplate="end">
+
+            <div class="flex align-items-center gap-2 ">
+                <label for="" class="text-l text-white
+                hover:bg-black-alpha-10 transition-all transition-duration-1000 ">
+                    Welcome {{userName}}</label>
+
+                <p-button icon="pi pi-power-off text-l text-white" type="button" [rounded]="true" [text]="true"
+                    (onClick)="Logout()">
+                </p-button>
+
+            </div>
+        </ng-template>
+
+    </p-toolbar>
+</div>
+<div class="container " style="overflow-y: auto;" >
+    <p-tabView [style]="{'height': '700px'}" styleClass="tabview-custom">
+
+        <p-tabPanel header="In process" headerStyleClass="remove-underline" >
+           
+            <div style="width:97%; align-items: end;">
+                <mat-dialog-actions style="display: flex; justify-content: flex-end;">
+                    <div class="flex flex-wrap  gap-4 flex-row">
+                        <button class="p-link inline-flex justify-content-center align-items-center text-white h-3rem w-6rem text-l hover:bg-green-400 transition-all transition-duration-1000 bg-blue-600"
+                            (click)="AddNew()">
+                            Add Task
+                        </button>
+                    </div>
+                </mat-dialog-actions>
+            </div>
+                    <div >
+                    <p-table [value]="tasks" dataKey="id" editMode="row" [rows]="5" [showCurrentPageReport]="true"
+                    [tableStyle]="{ 'min-width': '100%' }" currentPageReportTemplate="{first} to {last} of {totalRecords} entries"
+                    class="table-bordered bg-info-subtle    " styleClass="p-datatable-striped p-5 " [paginator]="true" >
+                    <ng-template pTemplate="header">
+                        <tr>
+                            <th style="width:15%">Date</th>
+                            <th style="width:20%">Description</th>
+                            <th style="width:10%">Is Completed?</th>
+                            <th style="width:10%">Action</th>
+                            
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-todo let-editing="editing" let-ri="rowIndex">
+                        <tr [pEditableRow]="todo">
+                            <td class="p-calender">
+                                <p-cellEditor>
+                                    <ng-template pTemplate="input" >
+                                       
+                                         <p-calendar [(ngModel)]="todo.targetDate" [ngModelOptions]="{standalone: true}"
+                                               dateFormat="mm/dd/yy" [appendTo]="'body'">
+                                         </p-calendar>
+                                    </ng-template>
+                                    <ng-template pTemplate="output">
+                                        {{todo.targetDate | date }}
+                                    </ng-template>
+                                </p-cellEditor>
+                            </td>
+                            <td>
+                                <p-cellEditor>
+                                    <ng-template pTemplate="input" >
+                                        <textarea pInputTextarea [(ngModel)]="todo.description" class="p-inputtext-lg" rows="2"
+                                            cols="20" [ngModelOptions]="{standalone: true}" required >
+                                        </textarea>
+                                    </ng-template>
+                                    <ng-template pTemplate="output" >
+                                        {{todo.description}}
+                                    </ng-template>
+                                </p-cellEditor>
+                            </td>
+                            <td >
+                                <p-cellEditor>
+                                    <ng-template pTemplate="input" >
+                                        <p-dropdown [options]="statuses" appendTo="body" [(ngModel)]="todo.done"
+                                            [style]="{'width':'100%'}"
+                                            [ngModelOptions]="{standalone: true}"
+                                            >
+                                        </p-dropdown>
+                                    </ng-template>
+                                    <ng-template pTemplate="output">
+                                        <p-dropdown [options]="statuses" appendTo="body" [(ngModel)]="todo.done"
+                                            [style]="{'width':'100%'}"
+                                            [ngModelOptions]="{standalone: true}" 
+                                            [disabled]="!editing">
+                                            {{todo.done ? 'Yes' : 'No'}}
+                                        </p-dropdown>
+            
+                                    </ng-template>
+                                </p-cellEditor>
+                            </td>
+            
+                            <td >
+                                
+                                <div class="flex align-items-center justify-content-center gap-2">
+                                    <!-- <p-button class="btnAdd" icon="pi pi-trash" class="ui-button-info" 
+                                        (onClick)="deleteBook(todo)"></p-button> -->
+                                    <button *ngIf="!editing" pButton pRipple type="button" pInitEditableRow icon="pi pi-pencil"
+                                        (click)="onRowEditInit(todo)" class="p-button-rounded p-button-text"
+                                        [disabled]="actionInProgress || editing" ></button>
+                                    <button *ngIf="editing" pButton pRipple type="button" pSaveEditableRow icon="pi pi-check"
+                                        (click)="onRowEditSave(todo)"
+                                        class="p-button-rounded p-button-text p-button-success mr-2"></button>
+                                    <button *ngIf="editing" pButton pRipple type="button" pCancelEditableRow icon="pi pi-times"
+                                        (click)="onRowEditCancel(todo, ri)"
+                                        class="p-button-rounded p-button-text p-button-danger"></button>
+                                        <button class="btn btn-light " (click)="deleteTask(todo.id)"
+                                        icon="pi pi-trash" class="p-button-rounded p-button-text p-button-danger" 
+                                        style="font-size: 1rem" pButton pRipple type="button"
+                                        [disabled]="actionInProgress || editing">
+                                            
+                                        </button>
+                                </div>
+                            </td>
+                            
+                        </tr>
+                    </ng-template>
+                </p-table>
+            </div>
+            
+        </p-tabPanel>
+
+        <p-tabPanel header="Completed">
+           
+            
+                <p-table [value]="ctasks" [rows]="5" [showCurrentPageReport]="true"
+                [tableStyle]="{ 'min-width': '100%' }" currentPageReportTemplate="{first} to {last} of {totalRecords} entries"
+                class="table-bordered bg-info-subtle    " styleClass="p-datatable-striped p-5 " [paginator]="true" >
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th style="width:15%">Date</th>
+                        <th style="width:20%">Description</th>
+                        <th style="width:10%">Is Completed?</th>
+                        <th style="width:10%">Action</th>
+                        
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-ctasks let-editing="editing" >
+                    <tr [pEditableRow]="ctasks">
+                        <td class="p-calender">
+                            <p-cellEditor>
+                                <ng-template pTemplate="input" >
+                                   
+                                     <p-calendar [(ngModel)]="ctasks.targetDate" [ngModelOptions]="{standalone: true}"
+                                           dateFormat="mm/dd/yy" [appendTo]="'body'">
+                                     </p-calendar>
+                                </ng-template>
+                                <ng-template pTemplate="output">
+                                    {{ctasks.targetDate | date }}
+                                </ng-template>
+                            </p-cellEditor>
+                        </td>
+                        <td>
+                            <p-cellEditor>
+                                <ng-template pTemplate="input" >
+                                    <textarea pInputTextarea [(ngModel)]="ctasks.description" class="p-inputtext-lg" rows="2"
+                                        cols="20" [ngModelOptions]="{standalone: true}" required >
+                                    </textarea>
+                                </ng-template>
+                                <ng-template pTemplate="output" >
+                                    {{ctasks.description}}
+                                </ng-template>
+                            </p-cellEditor>
+                        </td>
+                        <td>
+                            <p-cellEditor>
+                                <ng-template pTemplate="input" >
+                                    <p-dropdown [options]="statuses" appendTo="body" [(ngModel)]="ctasks.done"
+                                        [style]="{'width':'100%'}"
+                                        [ngModelOptions]="{standalone: true}"
+                                        >
+                                    </p-dropdown>
+                                </ng-template>
+                                <ng-template pTemplate="output" >
+                                    <p-dropdown [options]="statuses" appendTo="body" [(ngModel)]="ctasks.done"
+                                        [style]="{'width':'100%'}"
+                                        [ngModelOptions]="{standalone: true}" 
+                                        [disabled]="!editing"
+                                        >
+                                        {{ctasks.done ? 'Yes' : 'No'}}
+                                    </p-dropdown>
+        
+                                </ng-template>
+                            </p-cellEditor>
+                        </td>
+        
+                        <td >
+                            
+                            <div class="flex align-items-center justify-content-center gap-2">
+                                    <button class="btn btn-light " (click)="deleteCompletedTask(ctasks.id)"
+                                    icon="pi pi-trash" class="p-button-rounded p-button-text p-button-danger" 
+                                    style="font-size: 1rem" pButton pRipple type="button"
+                                    [disabled]="actionInProgress || editing"
+                                    >
+                                        
+                                    </button>
+                            </div>
+                        </td>
+                        
+                    </tr>
+                </ng-template>
+            </p-table>
+        
+            </p-tabPanel>
+        
+
+
+        <p-tabPanel header="Deleted">
+            
+                <p-table [value]="dtasks" [rows]="5" [showCurrentPageReport]="true"
+                [tableStyle]="{ 'min-width': '100%' }" currentPageReportTemplate="{first} to {last} of {totalRecords} entries"
+                class="table-bordered bg-info-subtle    " styleClass="p-datatable-striped p-5 " [paginator]="true" >
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th style="width:15%">Date</th>
+                        <th style="width:20%">Description</th>
+                        <th style="width:10%">Is Completed?</th>
+                        <th style="width:10%">Action</th>
+                        
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-dtasks let-editing="editing" >
+                    <tr [pEditableRow]="dtasks">
+                        <td class="p-calender">
+                            <p-cellEditor>
+                                <ng-template pTemplate="input" >
+                                   
+                                     <p-calendar [(ngModel)]="dtasks.targetDate" [ngModelOptions]="{standalone: true}"
+                                           dateFormat="mm/dd/yy" [appendTo]="'body'">
+                                     </p-calendar>
+                                </ng-template>
+                                <ng-template pTemplate="output">
+                                    {{dtasks.targetDate | date }}
+                                </ng-template>
+                            </p-cellEditor>
+                        </td>
+                        <td>
+                            <p-cellEditor>
+                                <ng-template pTemplate="input" >
+                                    <textarea pInputTextarea [(ngModel)]="dtasks.description" class="p-inputtext-lg" rows="2"
+                                        cols="20" [ngModelOptions]="{standalone: true}" required >
+                                    </textarea>
+                                </ng-template>
+                                <ng-template pTemplate="output" >
+                                    {{dtasks.description}}
+                                </ng-template>
+                            </p-cellEditor>
+                        </td>
+                        <td>
+                            <p-cellEditor>
+                                <ng-template pTemplate="input" >
+                                    <p-dropdown [options]="statuses" appendTo="body" [(ngModel)]="dtasks.done"
+                                        [style]="{'width':'100%'}"
+                                        [ngModelOptions]="{standalone: true}"
+                                        >
+                                    </p-dropdown>
+                                </ng-template>
+                                <ng-template pTemplate="output" >
+                                    <p-dropdown [options]="statuses" appendTo="body" [(ngModel)]="dtasks.done"
+                                        [style]="{'width':'100%'}"
+                                        [ngModelOptions]="{standalone: true}" 
+                                        [disabled]="!editing"
+                                        >
+                                        {{dtasks.done ? 'Yes' : 'No'}}
+                                    </p-dropdown>
+        
+                                </ng-template>
+                            </p-cellEditor>
+                        </td>
+        
+                        <td >
+                            
+                            <div class="flex align-items-center justify-content-center gap-2">
+                                    <button class="btn btn-light " (click)="deleteDeletedTask(dtasks.id)"
+                                    icon="pi pi-trash" class="p-button-rounded p-button-text p-button-danger" 
+                                    style="font-size: 1rem" pButton pRipple type="button"
+                                    
+                                    >
+                                        
+                                    </button>
+                            </div>
+                        </td>
+                        
+                    </tr>
+                </ng-template>
+            </p-table>
+        
+        </p-tabPanel>
+    </p-tabView>
+</div>
+
+<!-- <div class="card " *ngIf="editingTask">
+    <form (ngSubmit)="updateTask()" >
+   
+    <p-table [value]="tasks" dataKey="id" editMode="row" [rows]="5" [showCurrentPageReport]="true"
+        [tableStyle]="{ 'min-width': '40rem' }" currentPageReportTemplate="{first} to {last} of {totalRecords} entries"
+        class="table-bordered bg-info-subtle    " styleClass="p-datatable-striped p-5 " [paginator]="true">
+        <ng-template pTemplate="header">
+            <tr>
+                <th style="width:20%">Date</th>
+                <th style="width:20%">Description</th>
+                <th style="width:20%">Status</th>
+                <th style="width:20%"></th>
+                <th style="width:20%"></th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-todo let-editing="editing" let-ri="rowIndex">
+            <tr [pEditableRow]="todo">
+                <td>
+                    <p-cellEditor>
+                        <ng-template pTemplate="input">
+                            <p-calendar [(ngModel)]="todo.targetDate" [ngModelOptions]="{standalone: true}"
+                                dateFormat="mm/dd/yy">
+                            </p-calendar>
+                        </ng-template>
+                        <ng-template pTemplate="output">
+                            {{todo.targetDate | date }}
+                        </ng-template>
+                    </p-cellEditor>
+                </td>
+                <td>
+                    <p-cellEditor>
+                        <ng-template pTemplate="input">
+                            <textarea pInputTextarea [(ngModel)]="todo.description" class="p-inputtext-lg" rows="2"
+                                cols="20" required>
+                            </textarea>
+                        </ng-template>
+                        <ng-template pTemplate="output">
+                            {{todo.description}}
+                        </ng-template>
+                    </p-cellEditor>
+                </td>
+                <td>
+                    <p-cellEditor>
+                        <ng-template pTemplate="input">
+                            <p-dropdown [options]="statuses" appendTo="body" [(ngModel)]="todo.done"
+                                [style]="{'width':'100%'}">
+                            </p-dropdown>
+                        </ng-template>
+                        <ng-template pTemplate="output">
+                            <p-dropdown [options]="statuses" appendTo="body" [(ngModel)]="todo.done"
+                                [style]="{'width':'100%'}">
+                                {{todo.done ? 'Yes' : 'No'}}
+                            </p-dropdown>
+
+                        </ng-template>
+                    </p-cellEditor>
+                </td>
+
+                <td>
+                    <div class="flex align-items-center justify-content-center gap-2">
+                        <button *ngIf="!editing" pButton pRipple type="button" pInitEditableRow icon="pi pi-pencil"
+                            (click)="editTask(todo)" class="p-button-rounded p-button-text"></button>
+                        <button *ngIf="editing" pButton pRipple type="button" pSaveEditableRow icon="pi pi-check"
+                            (click)="updateTask()"
+                            class="p-button-rounded p-button-text p-button-success mr-2"></button>
+                        <button *ngIf="editing" pButton pRipple type="button" pCancelEditableRow icon="pi pi-times"
+                            (click)="onRowEditCancel(todo, ri)"
+                            class="p-button-rounded p-button-text p-button-danger"></button>
+                    </div>
+                </td>
+                <td>
+                    <div class="example-button-container">
+                        <button class="btn btn-light bg-blue-100" (click)="deleteTask(todo.id)">
+                            <i class="pi pi-trash bg-blue-100" style="font-size: 1rem"></i>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+
+</form>
+</div> -->
+
+
+
+
+<!-- <p-table
+      [value]="tasks"
+      [rows]="7"
+      [showCurrentPageReport]="true"
+      [tableStyle]="{ 'min-width': '40rem' }"
+      currentPageReportTemplate="{first} to {last} of {totalRecords} entries"
+      class="table-bordered bg-info-subtle    "
+      styleClass="p-datatable-striped p-5 "
+      [paginator]="true"
+    >
+      <ng-template pTemplate="header">
+        <tr>
+          <th style="width:25%" class="bg-blue-300">Target Date</th>
+          <th style="width:25%" class="bg-blue-300">Description</th>
+          <th style="width:25%" class="bg-blue-300">Is Completed</th>
+          <th class="bg-blue-300"> </th>
+          <th class="bg-blue-300"></th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-todo>
+        <tr>
+          <td>{{ todo.targetDate | date }}</td>
+          <td>{{ todo.description }}</td>
+          <td>
+            <div
+              cdkDrag
+              [cdkDragData]="todo"
+              class="draggable-cell"
+              (cdkDragEnded)="onDragEnded($event, todo)"
+            >
+              {{ todo.done ? 'Yes' : 'No' }}
+            </div>
+          </td>
+          <td>
+            <mat-dialog-actions>
+              <button
+                class="btn btn-light bg-blue-100"
+                (click)="editTask(todo)"
+              >
+                <i class="pi pi-pencil bg-blue-100" style="font-size: 1rem"></i>
+              </button>
+            </mat-dialog-actions>
+          </td>
+          <td>
+            <div class="example-button-container">
+              <button
+                class="btn btn-light bg-blue-100"
+                (click)="deleteTask(todo.id)"
+              >
+                <i class="pi pi-trash bg-blue-100" style="font-size: 1rem"></i>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table> -->
